@@ -1,0 +1,25 @@
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Dependencies (for future labs)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs (for future labs)
+dist/
+build/
+*.min.js
+*.min.css
