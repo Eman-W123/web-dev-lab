@@ -1,0 +1,7 @@
+<% if (user) { %>
+  <a class="account-link" href="/profile">My Profile</a>
+  <a class="account-link" href="/auth/logout">Logout</a>
+<% } else { %>
+  <a class="account-link" href="/auth/login">Login</a>
+  <a class="account-link account-link--primary" href="/auth/register">Register</a>
+<% } %>
