@@ -790,6 +790,36 @@ body {
     font-weight: 500;
     color: #1f1f1f;
 }
+
+.slide-counter {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.carousel-prev,
+.carousel-next {
+    background: #7a1f54;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background: #611742;
+}
  
 .featured-collection__products {
     position: relative;
@@ -798,6 +828,23 @@ body {
  
 .featured-collection .scroll-slider {
     overflow: hidden;
+}
+
+#productCarousel .slick-slide {
+    padding: 0 7px;
+}
+
+#productCarousel .slick-list {
+    margin: 0 -7px;
+}
+
+#productCarousel.carousel-fallback-active {
+    margin: 0 -7px;
+}
+
+#productCarousel.carousel-fallback-active .product-item {
+    padding: 0 7px;
+    box-sizing: border-box;
 }
  
 .featured-collection .scroll-slider__slider {
@@ -1257,34 +1304,34 @@ body {
 }
  
 /* Summer Essentials card images */
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="0"] .product-item:nth-child(1) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(1) .summer-product-image {
     background-image: url("../images/summer-essentials/image.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="0"] .product-item:nth-child(2) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(2) .summer-product-image {
     background-image: url("../images/summer-essentials/image copy.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="0"] .product-item:nth-child(3) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(3) .summer-product-image {
     background-image: url("../images/summer-essentials/image copy 2.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="0"] .product-item:nth-child(4) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(4) .summer-product-image {
     background-image: url("../images/summer-essentials/image copy 3.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="0"] .product-item:nth-child(5) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(5) .summer-product-image {
     background-image: url("../images/summer-essentials/image copy 4.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="1"] .product-item:nth-child(1) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(6) .summer-product-image {
     background-image: url("../images/items/image.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="1"] .product-item:nth-child(2) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(7) .summer-product-image {
     background-image: url("../images/items/image copy.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="1"] .product-item:nth-child(3) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(8) .summer-product-image {
     background-image: url("../images/items/image copy 2.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="1"] .product-item:nth-child(4) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(9) .summer-product-image {
     background-image: url("../images/items/image copy 3.png");
 }
-.featured-collection[aria-label="Summer Essentials"] .summer-slide-page[data-index="1"] .product-item:nth-child(5) .summer-product-image {
+.featured-collection[aria-label="Summer Essentials"] #productCarousel .product-item:nth-child(10) .summer-product-image {
     background-image: url("../images/items/image copy 4.png");
 }
  

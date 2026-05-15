@@ -68,7 +68,7 @@ app.use(function(req, res, next) {
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const adminRoutes = require('./routes/admin');
-const { isAdmin } = require('./middleware/auth');
+const { isAdmin, isLoggedIn } = require('./middleware/auth');
 
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
@@ -77,6 +77,16 @@ app.use('/admin', isAdmin, adminRoutes);
 // Home route
 app.get('/', function(req, res) {
     res.render('index');
+});
+
+// Checkout route (protected)
+app.get('/checkout', isLoggedIn, function(req, res) {
+    res.render('checkout');
+});
+
+// Profile route (protected)
+app.get('/profile', isLoggedIn, function(req, res) {
+    res.render('profile');
 });
 
 // ========================

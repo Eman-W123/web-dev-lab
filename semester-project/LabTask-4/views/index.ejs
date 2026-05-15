@@ -250,116 +250,99 @@
                 <h2 class="ff-heading section-header__heading fs-heading-3-base">Summer Essentials</h2>
             </div>
 
+            <div class="slide-counter">Showing <span id="currentSlide">1</span> of <span id="totalSlides">10</span></div>
+
+            <div class="carousel-controls">
+                <button class="carousel-prev" id="prevBtn" type="button">❮ Prev</button>
+                <button class="carousel-next" id="nextBtn" type="button">Next ❯</button>
+            </div>
+
             <div class="featured-collection__products featured-collection-slider-grid standard-grid-spacing product-item-holder" data-standard-grid-spacing-type="product-list" data-grid-style="default" data-product-item-alignment="center" data-has-slider="true" data-slider-desktop="true" data-slider-mobile="true">
                 <div class="scroll-slider scroll-slider--full-width-below-1024 scroll-slider--peek-and-full-width-below-1024 scroll-all-sizes" id="summerSlider">
-                    <div class="scroll-slider__slider" id="summerSliderTrack" data-slide-count="2">
-                        <div class="summer-slide-page" data-index="0">
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-1"><span class="summer-badge">5% off</span></div>
-                                    <h3 class="summer-product-title">SPF 60 Bright Sunblock</h3>
-                                    <p class="summer-product-price"><s>Rs.270.00</s> <span>Rs.257.00</span></p>
-                                    <button class="summer-product-action" type="button">Choose options</button>
-                                </div>
-                            </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-2"></div>
-                                    <h3 class="summer-product-title">Glow Face Serum 30ml</h3>
-                                    <p class="summer-product-price"><span>Rs.595.00</span></p>
-                                    <button class="summer-product-action" type="button">Add to Cart</button>
-                                </div>
-                            </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-3"></div>
-                                    <h3 class="summer-product-title">Vitamin C Serum 30ml</h3>
-                                    <p class="summer-product-price"><span>Rs.595.00</span></p>
-                                    <button class="summer-product-action" type="button">Add to Cart</button>
-                                </div>
-                            </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-4"><span class="summer-badge">5% off</span></div>
-                                    <h3 class="summer-product-title">SPF 90 Sunblock</h3>
-                                    <p class="summer-product-price"><s>Rs.270.00</s> <span>Rs.257.00</span></p>
-                                    <button class="summer-product-action" type="button">Choose options</button>
-                                </div>
-                            </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-5"></div>
-                                    <h3 class="summer-product-title">Rose Water 100ml</h3>
-                                    <p class="summer-product-price"><span>Rs.170.00</span></p>
-                                    <button class="summer-product-action" type="button">Add to Cart</button>
-                                </div>
+                    <div class="scroll-slider__slider" id="productCarousel" data-slide-count="10">
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-1"><span class="summer-badge">5% off</span></div>
+                                <h3 class="summer-product-title">SPF 60 Bright Sunblock</h3>
+                                <p class="summer-product-price"><s>Rs.270.00</s> <span>Rs.257.00</span></p>
+                                <button class="summer-product-action" type="button">Choose options</button>
                             </div>
                         </div>
-
-                        <div class="summer-slide-page" data-index="1">
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-6"><span class="summer-badge">5% off</span></div>
-                                    <h3 class="summer-product-title">SPF 50 Kids Sunblock</h3>
-                                    <p class="summer-product-price"><s>Rs.570.00</s> <span>Rs.270.00</span></p>
-                                    <button class="summer-product-action" type="button">Choose options</button>
-                                </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-2"></div>
+                                <h3 class="summer-product-title">Glow Face Serum 30ml</h3>
+                                <p class="summer-product-price"><span>Rs.595.00</span></p>
+                                <button class="summer-product-action" type="button">Add to Cart</button>
                             </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-7"><span class="summer-badge">5% off</span></div>
-                                    <h3 class="summer-product-title">Pink Bright Face Wash</h3>
-                                    <p class="summer-product-price"><s>Rs.225.00</s> <span>Rs.214.00</span></p>
-                                    <button class="summer-product-action" type="button">Choose options</button>
-                                </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-3"></div>
+                                <h3 class="summer-product-title">Vitamin C Serum 30ml</h3>
+                                <p class="summer-product-price"><span>Rs.595.00</span></p>
+                                <button class="summer-product-action" type="button">Add to Cart</button>
                             </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-8"></div>
-                                    <h3 class="summer-product-title">Acne Care Face Serum</h3>
-                                    <p class="summer-product-price"><span>Rs.595.00</span></p>
-                                    <button class="summer-product-action" type="button">Add to Cart</button>
-                                </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-4"><span class="summer-badge">5% off</span></div>
+                                <h3 class="summer-product-title">SPF 90 Sunblock</h3>
+                                <p class="summer-product-price"><s>Rs.270.00</s> <span>Rs.257.00</span></p>
+                                <button class="summer-product-action" type="button">Choose options</button>
                             </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-9"></div>
-                                    <h3 class="summer-product-title">Cleansing Milk 150ml</h3>
-                                    <p class="summer-product-price"><span>Rs.436.00</span></p>
-                                    <button class="summer-product-action" type="button">Add to Cart</button>
-                                </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-5"></div>
+                                <h3 class="summer-product-title">Rose Water 100ml</h3>
+                                <p class="summer-product-price"><span>Rs.170.00</span></p>
+                                <button class="summer-product-action" type="button">Add to Cart</button>
                             </div>
-                            <div class="product-item animation--item">
-                                <div class="product-item__inner">
-                                    <div class="summer-product-image summer-10"><span class="summer-badge">5% off</span></div>
-                                    <h3 class="summer-product-title">Anti-Sebum Sunblock</h3>
-                                    <p class="summer-product-price"><s>Rs.346.00</s> <span>Rs.329.00</span></p>
-                                    <button class="summer-product-action" type="button">Add to Cart</button>
-                                </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-6"><span class="summer-badge">5% off</span></div>
+                                <h3 class="summer-product-title">SPF 50 Kids Sunblock</h3>
+                                <p class="summer-product-price"><s>Rs.570.00</s> <span>Rs.270.00</span></p>
+                                <button class="summer-product-action" type="button">Choose options</button>
+                            </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-7"><span class="summer-badge">5% off</span></div>
+                                <h3 class="summer-product-title">Pink Bright Face Wash</h3>
+                                <p class="summer-product-price"><s>Rs.225.00</s> <span>Rs.214.00</span></p>
+                                <button class="summer-product-action" type="button">Choose options</button>
+                            </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-8"></div>
+                                <h3 class="summer-product-title">Acne Care Face Serum</h3>
+                                <p class="summer-product-price"><span>Rs.595.00</span></p>
+                                <button class="summer-product-action" type="button">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-9"></div>
+                                <h3 class="summer-product-title">Cleansing Milk 150ml</h3>
+                                <p class="summer-product-price"><span>Rs.436.00</span></p>
+                                <button class="summer-product-action" type="button">Add to Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-item animation--item">
+                            <div class="product-item__inner">
+                                <div class="summer-product-image summer-10"><span class="summer-badge">5% off</span></div>
+                                <h3 class="summer-product-title">Anti-Sebum Sunblock</h3>
+                                <p class="summer-product-price"><s>Rs.346.00</s> <span>Rs.329.00</span></p>
+                                <button class="summer-product-action" type="button">Add to Cart</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="scroll-slider-nav-button-wrapper scroll-slider-nav-button-wrapper--prev" data-is-small="false">
-                    <button type="button" class="scroll-slider-nav-button scroll-slider-nav-button--prev" title="Previous" id="summerPrevBtn" name="prev" disabled>
-                        <span class="icon icon-arrow-short">❮</span>
-                    </button>
-                </div>
-
-                <div class="scroll-slider-nav-button-wrapper scroll-slider-nav-button-wrapper--next" data-is-small="false">
-                    <button type="button" class="scroll-slider-nav-button scroll-slider-nav-button--next" title="Next" id="summerNextBtn" name="next">
-                        <span class="icon icon-arrow-short">❯</span>
-                    </button>
-                </div>
             </div>
-
-            <section-footer-component class="section-footer animation--container-footer" data-children-visible-above-720="1" data-children-visible-below-720="0">
-                <div class="scroll-slider-page-dots" id="summerSliderDots">
-                    <button type="button" class="scroll-slider-page-dot is-selected" data-go-to="0" aria-label="Move carousel to slide 1"></button>
-                    <button type="button" class="scroll-slider-page-dot" data-go-to="1" aria-label="Move carousel to slide 2"></button>
-                </div>
-            </section-footer-component>
         </div>
     </section>
 
@@ -972,10 +955,6 @@
   </div>
  </section>
 
-    <script src="script.js"></script>
-    <script src="/script.js"></script>
-</body>
-</html>
 <!-- Happy Customers / Reviews Section -->
 <section class="reviews-section">
   <div class="reviews__inner">
@@ -1229,6 +1208,8 @@
     </div>
   </div>
 </footer>
+
+<script src="/script.js"></script>
 
 </body>
 </html>

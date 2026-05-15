@@ -38,11 +38,15 @@ const products = [
 ];
 
 async function seedDatabase(){
-  await Product.deleteMany({});
-  console.log('Existing products deleted');
+  const existingCount = await Product.countDocuments();
+  if (existingCount > 0) {
+    console.log(`Seed skipped: ${existingCount} products already exist.`);
+    await mongoose.connection.close();
+    return;
+  }
   await Product.insertMany(products);
   console.log('Products inserted');
-  mongoose.connection.close();
+  await mongoose.connection.close();
 }
 
 seedDatabase();
