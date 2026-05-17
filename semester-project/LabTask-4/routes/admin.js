@@ -3,14 +3,38 @@ const router = express.Router();
 const Product = require('../models/Product');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const { isAdmin } = require('../middleware/auth');
 
 // ========================
 // MULTER SETUP
 // ========================
+const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+async function removeUploadIfExists(imagePath) {
+    if (!imagePath || typeof imagePath !== 'string') return;
+    if (!imagePath.startsWith('/uploads/')) return;
+
+    const fileName = imagePath.replace('/uploads/', '');
+    if (!fileName) return;
+
+    const fullPath = path.join(uploadsDir, fileName);
+    try {
+        await fs.promises.stat(fullPath);
+        await fs.promises.unlink(fullPath);
+    } catch (err) {
+        if (err.code !== 'ENOENT') {
+            console.warn('Failed to remove upload:', err);
+        }
+    }
+}
+
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, 'public/uploads/');
+        cb(null, uploadsDir);
     },
     filename: function(req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -89,6 +113,9 @@ router.get('/edit/:id', async function(req, res) {
 router.post('/edit/:id', upload.single('image'), async function(req, res) {
     try {
         const { name, price, category, rating, stock } = req.body;
+        const product = await Product.findById(req.params.id);
+        if (!product) return res.status(404).send('Product not found');
+
         const updateData = {
             name,
             price: parseFloat(price),
@@ -102,6 +129,10 @@ router.post('/edit/:id', upload.single('image'), async function(req, res) {
         }
 
         await Product.findByIdAndUpdate(req.params.id, updateData);
+
+        if (req.file) {
+            await removeUploadIfExists(product.image);
+        }
         res.redirect('/admin');
     } catch (err) {
         console.error(err);
@@ -114,7 +145,11 @@ router.post('/edit/:id', upload.single('image'), async function(req, res) {
 // ========================
 router.post('/delete/:id', async function(req, res) {
     try {
+        const product = await Product.findById(req.params.id);
+        if (!product) return res.status(404).send('Product not found');
+
         await Product.findByIdAndDelete(req.params.id);
+        await removeUploadIfExists(product.image);
         res.redirect('/admin');
     } catch (err) {
         console.error(err);

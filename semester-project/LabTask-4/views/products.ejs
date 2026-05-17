@@ -11,7 +11,10 @@
     <div class="account-links account-links--page">
       <%- include('partials/account-links') %>
     </div>
-    <h1>Our Products</h1>
+    <div class="products-page__header">
+      <h1>Our Products</h1>
+      <a class="account-link" href="/cart">View Cart<% if (cartCount > 0) { %> (<%= cartCount %>)<% } %></a>
+    </div>
     <div class="filters-section">
       <form class="filters-form" method="GET" action="/products">
         <div class="filter-group">
@@ -67,6 +70,15 @@
             <p class="product-card__rating">Rating: <%= product.rating %></p>
             <p class="product-card__price">Rs. <%= product.price %></p>
             <p class="product-card__stock"><%= product.stock >0 ? 'In Stock' : 'Out of Stock' %></p>
+            <% if (product.stock > 0) { %>
+              <button
+                type="button"
+                class="btn btn--primary btn--small add-to-cart-btn"
+                data-product-id="<%= product._id %>"
+                data-product-name="<%= product.name %>">
+                Add to Cart
+              </button>
+            <% } %>
           </div>
         </div>
       <% }) %>
@@ -97,5 +109,12 @@
     <% } %>
 
   </div>
+
+  <div id="cart-toast" class="cart-toast" hidden></div>
+
+  <script>
+    window.RIVAJ_USER = <%- JSON.stringify(!!user) %>;
+  </script>
+  <script src="/script.js"></script>
 </body>
 </html>

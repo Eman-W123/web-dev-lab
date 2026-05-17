@@ -9,39 +9,303 @@
         body {
             font-family: 'Segoe UI', sans-serif;
             background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
         }
-        .card {
-            background: #fff;
-            padding: 32px;
+
+        .checkout-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .checkout-page h1 {
+            font-size: 28px;
+            color: #7a1f54;
+            margin-bottom: 30px;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
             border-radius: 8px;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 30px;
+        }
+
+        .form-card h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            max-width: 520px;
-            text-align: center;
-        }
-        h1 { color: #7a1f54; margin-bottom: 10px; }
-        p { color: #555; }
-        .btn {
-            display: inline-block;
-            margin-top: 18px;
-            padding: 10px 18px;
-            background: #7a1f54;
-            color: #fff;
-            text-decoration: none;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 14px;
+            color: #333;
         }
-        .btn:hover { background: #611742; }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #7a1f54;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .required { color: #d9534f; }
+
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 24px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .order-summary h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .order-item__name {
+            color: #333;
+            flex: 1;
+        }
+
+        .order-item__qty {
+            color: #888;
+            margin: 0 10px;
+        }
+
+        .order-item__price {
+            color: #7a1f54;
+            font-weight: 600;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .summary-row.total {
+            font-size: 18px;
+            font-weight: 700;
+            color: #222;
+            padding-top: 12px;
+            border-top: 2px solid #eee;
+            margin-top: 12px;
+        }
+
+        /* Buttons */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: #7a1f54;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #611742;
+        }
+
+        .btn-back {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            color: #7a1f54;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-back:hover {
+            text-decoration: underline;
+        }
+
+        /* Flash messages */
+        .flash-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Checkout</h1>
-        <p>This page is protected. Only logged-in users can access checkout.</p>
-        <a class="btn" href="/products">Back to Products</a>
+
+<div class="checkout-page">
+    <h1>Checkout</h1>
+
+    <!-- Flash Messages -->
+    <% if(error && error.length > 0) { %>
+        <div class="flash-error"><%= error[0] %></div>
+    <% } %>
+
+    <div class="checkout-layout">
+
+        <!-- Shipping Form -->
+        <div class="form-card">
+            <h2>Shipping Information</h2>
+
+            <form action="/checkout" method="POST">
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        value="<%= user ? user.name : '' %>"
+                        required
+                    >
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        name="phone"
+                        placeholder="e.g. 03001234567"
+                        required
+                    >
+                </div>
+
+                <!-- Street Address -->
+                <div class="form-group">
+                    <label>Street Address <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        name="street"
+                        placeholder="House no, Street, Area"
+                        required
+                    >
+                </div>
+
+                <!-- City and Postal Code -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City <span class="required">*</span></label>
+                        <input
+                            type="text"
+                            name="city"
+                            placeholder="e.g. Lahore"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <input
+                            type="text"
+                            name="postalCode"
+                            placeholder="e.g. 54000"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-group">
+                    <label>Payment Method <span class="required">*</span></label>
+                    <select name="paymentMethod" style="width:100%; padding:10px 14px; border:1px solid #ddd; border-radius:4px; font-size:14px;">
+                        <option value="cod">Cash on Delivery</option>
+                        <option value="bank">Bank Transfer</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Place Order →
+                </button>
+
+            </form>
+
+            <a href="/cart" class="btn-back">← Back to Cart</a>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2>Your Order</h2>
+
+            <% cart.forEach(function(item) { %>
+            <div class="order-item">
+                <span class="order-item__name"><%= item.name %></span>
+                <span class="order-item__qty">x<%= item.quantity %></span>
+                <span class="order-item__price">Rs. <%= item.price * item.quantity %></span>
+            </div>
+            <% }); %>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>Rs. <%= totalAmount %></span>
+            </div>
+
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>Free</span>
+            </div>
+
+            <div class="summary-row total">
+                <span>Total</span>
+                <span>Rs. <%= totalAmount %></span>
+            </div>
+        </div>
+
     </div>
+</div>
+
 </body>
 </html>

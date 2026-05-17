@@ -1,4 +1,5 @@
 <% if (user) { %>
+  <a class="account-link" href="/cart">Cart<% if (cartCount > 0) { %> (<%= cartCount %>)<% } %></a>
   <a class="account-link" href="/profile">My Profile</a>
   <a class="account-link" href="/auth/logout">Logout</a>
 <% } else { %>

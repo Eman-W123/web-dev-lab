@@ -165,3 +165,117 @@ if (window.jQuery) {
 } else {
   document.addEventListener('DOMContentLoaded', initCustomCarouselFallback);
 }
+
+function showCartToast(message, isError) {
+  var toast = document.getElementById('cart-toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.hidden = false;
+  toast.classList.toggle('cart-toast--error', !!isError);
+  window.setTimeout(function() {
+    toast.hidden = true;
+  }, 3000);
+}
+
+function updateCartBadge(count) {
+  var links = document.querySelectorAll('[data-cart-count]');
+  links.forEach(function(link) {
+    link.setAttribute('data-cart-count', String(count));
+    var existing = link.querySelector('.cart-badge');
+    if (count > 0) {
+      if (!existing) {
+        existing = document.createElement('span');
+        existing.className = 'cart-badge';
+        link.appendChild(existing);
+      }
+      existing.textContent = String(count);
+    } else if (existing) {
+      existing.remove();
+    }
+  });
+}
+
+function refreshCartBadge() {
+  fetch('/cart/count')
+    .then(function(res) { return res.json(); })
+    .then(function(data) { updateCartBadge(data.count || 0); })
+    .catch(function() {});
+}
+
+function addToCart(productId) {
+  if (!window.RIVAJ_USER) {
+    showCartToast('Please login to add items to cart', true);
+    window.setTimeout(function() {
+      window.location.href = '/auth/login';
+    }, 1200);
+    return;
+  }
+
+  fetch('/cart/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ productId: productId, quantity: 1 })
+  })
+    .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
+    .then(function(result) {
+      if (!result.ok) {
+        showCartToast(result.data.message || 'Could not add to cart', true);
+        if (result.data.message && result.data.message.toLowerCase().indexOf('login') !== -1) {
+          window.setTimeout(function() { window.location.href = '/auth/login'; }, 1200);
+        }
+        return;
+      }
+      showCartToast(result.data.message || 'Added to cart');
+      updateCartBadge(result.data.cartCount || 0);
+    })
+    .catch(function() {
+      showCartToast('Could not add to cart', true);
+    });
+}
+
+function findProductIdByName(name) {
+  var products = window.RIVAJ_PRODUCTS || [];
+  var normalized = name.trim().toLowerCase();
+  var match = products.find(function(p) {
+    return p.name && p.name.trim().toLowerCase() === normalized;
+  });
+  if (match) return match._id;
+  match = products.find(function(p) {
+    return p.name && normalized.indexOf(p.name.trim().toLowerCase()) !== -1;
+  });
+  return match ? match._id : null;
+}
+
+function initAddToCartButtons() {
+  document.addEventListener('click', function(event) {
+    var btn = event.target.closest('.add-to-cart-btn');
+    if (btn) {
+      event.preventDefault();
+      var productId = btn.getAttribute('data-product-id');
+      if (productId) addToCart(productId);
+      return;
+    }
+
+    var actionBtn = event.target.closest('.summer-product-action, .pc-product-action');
+    if (!actionBtn) return;
+    var label = (actionBtn.textContent || '').trim();
+    if (label.toLowerCase().indexOf('add to cart') === -1) return;
+
+    event.preventDefault();
+    var card = actionBtn.closest('.product-item, .pc-product-item');
+    if (!card) return;
+    var titleEl = card.querySelector('.summer-product-title, .pc-product-title');
+    if (!titleEl) return;
+    var productId = findProductIdByName(titleEl.textContent || '');
+    if (!productId) {
+      showCartToast('Product not found. Browse /products to add items.', true);
+      return;
+    }
+    addToCart(productId);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  initAddToCartButtons();
+  refreshCartBadge();
+});

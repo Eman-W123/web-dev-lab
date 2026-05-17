@@ -54,18 +54,8 @@
         <div class="no-products">No products found</div>
       <% } %>
       <% products.forEach(function(product){ %>
-        <div class="product-card">
-          <div class="product-card__image">
-            <img src="<%= product.image %>" alt="<%= product.name %>">
-          </div>
-          <div class="product-card__body">
-            <p class="product-card__category"><%= product.category %></p>
-            <h3 class="product-card__name"><%= product.name %></h3>
-            <p class="product-card__rating">Rating: <%= product.rating %></p>
-            <p class="product-card__price">Rs. <%= product.price %></p>
-            <p class="product-card__stock"><%= product.stock >0 ? 'In Stock' : 'Out of Stock' %></p>
-          </div>
-        </div>
+       
+        
       <% }) %>
     </div>
 

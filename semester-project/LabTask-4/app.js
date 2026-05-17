@@ -59,6 +59,8 @@ app.use(function(req, res, next) {
     res.locals.user = req.session.user || null;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    const cart = req.session.cart || [];
+    res.locals.cartCount = cart.reduce(function(sum, item) { return sum + item.quantity; }, 0);
     next();
 });
 
@@ -70,18 +72,30 @@ const productRoutes = require('./routes/products');
 const adminRoutes = require('./routes/admin');
 const { isAdmin, isLoggedIn } = require('./middleware/auth');
 
+const cartRoutes = require('./routes/cart');
+const checkoutRoutes = require('./routes/checkout');
+
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/admin', isAdmin, adminRoutes);
+app.use('/cart', cartRoutes);
+app.use('/checkout', checkoutRoutes);
 
-// Home route
-app.get('/', function(req, res) {
-    res.render('index');
+// Order success page
+app.get('/order-success', function(req, res) {
+    res.render('order-success');
 });
 
-// Checkout route (protected)
-app.get('/checkout', isLoggedIn, function(req, res) {
-    res.render('checkout');
+// Home route
+const Product = require('./models/Product');
+app.get('/', async function(req, res) {
+    try {
+        const products = await Product.find().select('_id name').lean();
+        res.render('index', { products: products });
+    } catch (err) {
+        console.error(err);
+        res.render('index', { products: [] });
+    }
 });
 
 // Profile route (protected)
@@ -101,6 +115,17 @@ app.use('/api/v1/auth', apiAuthRoutes);
 app.use('/api/v1/products', apiProductRoutes);
 app.use('/api/v1/user', apiUserRoutes);
 app.use('/api/v1/orders', apiOrderRoutes);
+
+// ========================
+// ERROR HANDLER
+// ========================
+app.use(function(err, req, res, next) {
+    console.error('Unhandled error:', err);
+    const message = (process.env.NODE_ENV === 'production')
+        ? 'Server error'
+        : (err && err.message ? err.message : 'Server error');
+    res.status(500).send(message);
+});
 
 // ========================
 // START SERVER
