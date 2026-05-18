@@ -54,6 +54,7 @@ router.get('/', async function(req, res) {
         const categories = await Product.distinct('category');
 
         res.render('admin/dashboard', {
+            layout: false,
             products,
             totalProducts,
             totalStock,
@@ -69,7 +70,7 @@ router.get('/', async function(req, res) {
 // ADD PRODUCT - GET /admin/add
 // ========================
 router.get('/add', function(req, res) {
-    res.render('admin/add');
+    res.render('admin/add', { layout: false });
 });
 
 // ADD PRODUCT - POST /admin/add
@@ -102,7 +103,7 @@ router.get('/edit/:id', async function(req, res) {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) return res.status(404).send('Product not found');
-        res.render('admin/edit', { product });
+        res.render('admin/edit', { layout: false, product });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');

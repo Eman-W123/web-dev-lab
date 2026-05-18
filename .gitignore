@@ -18,6 +18,9 @@ node_modules/
 package-lock.json
 yarn.lock
 
+# Local MongoDB data
+mongo-data/
+
 # Build outputs (for future labs)
 dist/
 build/

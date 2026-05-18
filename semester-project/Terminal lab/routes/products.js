@@ -54,6 +54,7 @@ router.get('/', async function(req, res){
     const categories = await Product.distinct('category');
 
     res.render('products', {
+      layout: false,
       products, currentPage: page, totalPages, totalProducts,
       search,
       category,

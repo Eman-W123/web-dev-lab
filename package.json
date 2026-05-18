@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Eman-W123/web-dev-lab/issues"
   },
-  "homepage": "https://github.com/Eman-W123/web-dev-lab#readme"
+  "homepage": "https://github.com/Eman-W123/web-dev-lab#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.6.1"
+  }
 }

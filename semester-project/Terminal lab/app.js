@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(expressLayouts);
-app.set('layout', 'layout');
+app.set('layout', false);
 
 // ========================
 // MIDDLEWARE
@@ -64,7 +64,6 @@ app.use(function(req, res, next) {
     res.locals.error = req.flash('error');
     const cart = req.session.cart || [];
     res.locals.cartCount = cart.reduce(function(sum, item) { return sum + item.quantity; }, 0);
-    res.locals.layout = false;
     next();
 });
 
@@ -97,10 +96,10 @@ const Product = require('./models/Product');
 app.get('/', async function(req, res) {
     try {
         const products = await Product.find().select('_id name').lean();
-        res.render('index', { products: products });
+        res.render('index', { layout: false, products: products });
     } catch (err) {
         console.error(err);
-        res.render('index', { products: [] });
+        res.render('index', { layout: false, products: [] });
     }
 });
 

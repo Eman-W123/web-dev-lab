@@ -2,11 +2,17 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
+router.use(function(req, res, next) {
+    res.locals.layout = false;
+    next();
+});
+
 // ========================
 // REGISTER - GET
 // ========================
 router.get('/register', function(req, res) {
     res.render('auth/register', {
+        layout: false,
         messages: req.flash()
     });
 });
@@ -58,6 +64,7 @@ router.post('/register', async function(req, res) {
 // ========================
 router.get('/login', function(req, res) {
     res.render('auth/login', {
+        layout: false,
         messages: req.flash()
     });
 });
