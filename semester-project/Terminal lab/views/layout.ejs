@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rivaj</title>
+    <link rel="stylesheet" href="/style.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav style="background:#7a1f54; padding:14px 24px; display:flex; gap:20px; align-items:center;">
+        <a href="/" style="color:white; text-decoration:none; font-weight:700; font-size:18px;">Rivaj</a>
+        <a href="/products" style="color:white; text-decoration:none; font-size:14px;">Products</a>
+        <a href="/onsale-products" style="color:white; text-decoration:none; font-size:14px;">On Sale</a>
+        <a href="/cart" style="color:white; text-decoration:none; font-size:14px;">Cart</a>
+        <% if(user) { %>
+            <a href="/auth/logout" style="color:white; text-decoration:none; font-size:14px; margin-left:auto;">Logout (<%= user.name %>)</a>
+        <% } else { %>
+            <a href="/auth/login" style="color:white; text-decoration:none; font-size:14px; margin-left:auto;">Login</a>
+        <% } %>
+    </nav>
+
+    <!-- Flash Messages -->
+    <% if(success && success.length > 0) { %>
+        <div style="background:#d4edda; color:#155724; padding:12px 24px; font-size:14px;">
+            <%= success[0] %>
+        </div>
+    <% } %>
+    <% if(error && error.length > 0) { %>
+        <div style="background:#f8d7da; color:#721c24; padding:12px 24px; font-size:14px;">
+            <%= error[0] %>
+        </div>
+    <% } %>
+
+    <!-- Page Content -->
+    <%- body %>
+
+</body>
+</html>

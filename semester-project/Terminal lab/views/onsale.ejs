@@ -1,0 +1,263 @@
+<div class="onsale-page">
+    <div class="onsale-header">
+        <h1>On Sale Products</h1>
+        <p>Total <strong><%= totalProducts %></strong> products on sale.</p>
+    </div>
+
+    <div id="product-list">
+        <% products.forEach(function(product) { %>
+            <div class="product-card sale-card">
+                <div class="product-card__image">
+                    <% if (product.image) { %>
+                        <img src="<%= product.image %>" alt="<%= product.name %>">
+                    <% } %>
+                    <span class="sale-badge">ON SALE</span>
+                </div>
+                <div class="product-card__body">
+                    <p class="product-card__category"><%= product.category %></p>
+                    <h3 class="product-card__name"><%= product.name %></h3>
+                    <p class="product-card__rating">Rating: <%= product.rating %></p>
+                    <p class="product-card__price">Rs. <%= product.price %></p>
+                    <p class="product-card__stock">
+                        <%= product.stock > 0 ? 'In Stock' : 'Out of Stock' %>
+                    </p>
+                    <% if (product.stock > 0) { %>
+                        <button
+                            type="button"
+                            class="product-card__btn add-to-cart-btn"
+                            data-product-id="<%= product._id %>">
+                            Add to Cart
+                        </button>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <div id="pagination-controls">
+        <button id="prevBtn" type="button">Previous</button>
+        <span id="pageIndicator">Page 1 of 1</span>
+        <button id="nextBtn" type="button">Next</button>
+    </div>
+</div>
+
+<style>
+    .onsale-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .onsale-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .onsale-header h1 {
+        font-size: 32px;
+        color: #7a1f54;
+        margin-bottom: 8px;
+    }
+
+    .onsale-header p {
+        color: #666;
+        font-size: 16px;
+    }
+
+    #product-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .sale-card {
+        background: #ffffff;
+        border-radius: 8px;
+        border: 2px solid #e74c5b;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+    }
+
+    .sale-card:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card__image {
+        position: relative;
+        height: 200px;
+        background: #f5f5f5;
+        overflow: hidden;
+    }
+
+    .product-card__image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .sale-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: #e74c5b;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 3px;
+    }
+
+    .product-card__body {
+        padding: 14px;
+    }
+
+    .product-card__category {
+        font-size: 11px;
+        color: #7a1f54;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+    }
+
+    .product-card__name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 6px;
+    }
+
+    .product-card__rating {
+        font-size: 13px;
+        color: #f5a623;
+        margin-bottom: 4px;
+    }
+
+    .product-card__price {
+        font-size: 16px;
+        font-weight: 700;
+        color: #7a1f54;
+        margin-bottom: 4px;
+    }
+
+    .product-card__stock {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 10px;
+    }
+
+    .product-card__btn {
+        width: 100%;
+        padding: 8px;
+        background: #7a1f54;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .product-card__btn:hover {
+        background: #611742;
+    }
+
+    #pagination-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    #prevBtn,
+    #nextBtn {
+        padding: 10px 24px;
+        background: #7a1f54;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    #prevBtn:hover,
+    #nextBtn:hover {
+        background: #611742;
+    }
+
+    #prevBtn:disabled,
+    #nextBtn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
+    #pageIndicator {
+        font-size: 15px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    @media (max-width: 1024px) {
+        #product-list {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 640px) {
+        #product-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    $(function() {
+        var itemsPerPage = 10;
+        var currentPage = 1;
+        var allCards = $('#product-list .sale-card');
+        var totalCards = allCards.length;
+        var totalPages = Math.max(Math.ceil(totalCards / itemsPerPage), 1);
+
+        function updateButtons(page) {
+            $('#prevBtn').prop('disabled', page <= 1);
+            $('#nextBtn').prop('disabled', page >= totalPages);
+        }
+
+        function showPage(page) {
+            allCards.hide();
+            var startIndex = (page - 1) * itemsPerPage;
+            var endIndex = startIndex + itemsPerPage;
+            allCards.slice(startIndex, endIndex).show();
+            $('#pageIndicator').text('Page ' + page + ' of ' + totalPages);
+            updateButtons(page);
+        }
+
+        if (totalCards === 0) {
+            $('#pagination-controls').hide();
+            return;
+        }
+
+        showPage(currentPage);
+
+        $('#nextBtn').on('click', function() {
+            if (currentPage < totalPages) {
+                currentPage += 1;
+                showPage(currentPage);
+            }
+        });
+
+        $('#prevBtn').on('click', function() {
+            if (currentPage > 1) {
+                currentPage -= 1;
+                showPage(currentPage);
+            }
+        });
+    });
+</script>
+
+<script>
+    window.RIVAJ_USER = <%- JSON.stringify(!!user) %>;
+</script>
+<script src="/script.js"></script>

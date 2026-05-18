@@ -6,7 +6,11 @@ const productSchema = new mongoose.Schema({
   category: String,
   rating: Number,
   stock: Number,
-  image: String
+  image: String,
+  isOnSale: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model('Product', productSchema);
